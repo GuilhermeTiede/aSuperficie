@@ -14,6 +14,7 @@ import {
   Plus,
   Trash2,
   MessageCircle,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +44,6 @@ type Texture = {
 
 const TEXTURES: Texture[] = [
   { name: "Areia", image: "/images/textura-areia.png" },
-  { name: "Fibra de Algodão", image: "/images/textura-fibra-de-algodao.png" },
   { name: "Linho Soft", image: "/images/textura-linho-soft.png" },
   { name: "Linho", image: "/images/textura-linho.png" },
 ];
@@ -69,13 +69,13 @@ const PRODUCTS: Product[] = [
     number: "001",
     name: "Peixinhos",
     category: ["Marinho", "Banheiro", "Minimalista"],
-    textures: ["Areia", "Fibra de Algodão", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho"],
     imageRoom: "/images/colecao-peixinhos-1.png",
     imageSheet: "/images/colecao-peixinhos-2.png",
     imageDetail: "/images/colecao-peixinhos-3.png",
     description:
       "Padrão elegante com peixes estilizados em tons de azul. Desenho minimalista perfeito para banheiros sofisticados e ambientes que desejam trazer o oceano com discrição.",
-    material: "Vinil adesivo blockout | Papel de parede liso - fibra algodão",
+    material: "Vinil adesivo blockout | Papel de parede liso e texturas",
     rollWidth: "120 cm",
     availableHeights: "250 e 300 cm",
   },
@@ -84,14 +84,13 @@ const PRODUCTS: Product[] = [
     number: "002",
     name: "Praia",
     category: ["Infantil", "Verão", "Pessoas"],
-    textures: ["Areia", "Fibra de Algodão", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho"],
     imageRoom: "/images/colecao-praia-1.png",
     imageSheet: "/images/colecao-praia-2.png",
     imageDetail: "/images/colecao-praia-3.png",
     description:
       "Cena animada de praia com pessoas em atividades de verão, em tons pastéis suaves. Uma celebração da diversão e liberdade do litoral, ideal para quartos infantis.",
-    material:
-      "Vinil adesivo blockout | Papel de parede liso - fibra algodão e texturas",
+    material: "Vinil adesivo blockout | Papel de parede liso e texturas",
     rollWidth: "120 cm",
     availableHeights: "250 e 300 cm",
   },
@@ -100,14 +99,13 @@ const PRODUCTS: Product[] = [
     number: "003",
     name: "Oceano",
     category: ["Marinho", "Infantil", "Aventura"],
-    textures: ["Areia", "Fibra de Algodão", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho"],
     imageRoom: "/images/colecao-oceano-1.png",
     imageSheet: "/images/colecao-oceano-2.png",
     imageDetail: "/images/colecao-oceano-3.png",
     description:
       "Paisagem marinha tranquila com veleiros navegando em águas calmas. Tonalidades turquesa e branco criam uma atmosfera serena e inspiradora para ambientes infantis.",
-    material:
-      "Vinil adesivo blockout | Papel de parede liso - fibra algodão e texturas",
+    material: "Vinil adesivo blockout | Papel de parede liso e texturas",
     rollWidth: "120 cm",
     availableHeights: "250 e 300 cm",
   },
@@ -116,14 +114,13 @@ const PRODUCTS: Product[] = [
     number: "004",
     name: "Rede",
     category: ["Banheiro", "Marinho", "Geométrico"],
-    textures: ["Areia", "Fibra de Algodão", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho"],
     imageRoom: "/images/colecao-rede-1.png",
     imageSheet: "/images/colecao-rede-2.png",
     imageDetail: "/images/colecao-rede-3.png",
     description:
       "Padrão geométrico minimalista com peixes estilizados em uma rede de linhas. Design clean e sofisticado que traz elegância marinha para banheiros e espaços adultos.",
-    material:
-      "Vinil adesivo blockout | Papel de parede liso - fibra algodão e texturas",
+    material: "Vinil adesivo blockout | Papel de parede liso e texturas",
     rollWidth: "120 cm",
     availableHeights: "250 e 300 cm",
   },
@@ -193,6 +190,17 @@ const ProductCard = ({ product }: { product: Product }) => {
           fill
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
+
+        {/* CTA Button - Ver Detalhes */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <button
+            className="pointer-events-auto px-6 py-3 bg-white/95 hover:bg-white text-stone-900 font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 backdrop-blur-sm border border-stone-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Eye className="w-4 h-4" />
+            Ver Detalhes
+          </button>
+        </div>
 
         {/* Navigation Arrows */}
         <div className="absolute inset-0 flex items-center justify-between px-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
