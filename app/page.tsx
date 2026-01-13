@@ -46,6 +46,7 @@ const TEXTURES: Texture[] = [
   { name: "Areia", image: "/images/textura-areia.png" },
   { name: "Linho Soft", image: "/images/textura-linho-soft.png" },
   { name: "Linho", image: "/images/textura-linho.png" },
+  { name: "Algodão", image: "/images/textura-algodao.png" },
 ];
 
 type Product = {
@@ -69,7 +70,7 @@ const PRODUCTS: Product[] = [
     number: "001",
     name: "Peixinhos",
     category: ["Marinho", "Banheiro", "Minimalista"],
-    textures: ["Areia", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho", "Algodão"],
     imageRoom: "/images/colecao-peixinhos-1.png",
     imageSheet: "/images/colecao-peixinhos-2.png",
     imageDetail: "/images/colecao-peixinhos-3.png",
@@ -84,7 +85,7 @@ const PRODUCTS: Product[] = [
     number: "002",
     name: "Praia",
     category: ["Infantil", "Verão", "Pessoas"],
-    textures: ["Areia", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho", "Algodão"],
     imageRoom: "/images/colecao-praia-1.png",
     imageSheet: "/images/colecao-praia-2.png",
     imageDetail: "/images/colecao-praia-3.png",
@@ -99,7 +100,7 @@ const PRODUCTS: Product[] = [
     number: "003",
     name: "Oceano",
     category: ["Marinho", "Infantil", "Aventura"],
-    textures: ["Areia", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho", "Algodão"],
     imageRoom: "/images/colecao-oceano-1.png",
     imageSheet: "/images/colecao-oceano-2.png",
     imageDetail: "/images/colecao-oceano-3.png",
@@ -114,7 +115,7 @@ const PRODUCTS: Product[] = [
     number: "004",
     name: "Rede",
     category: ["Banheiro", "Marinho", "Geométrico"],
-    textures: ["Areia", "Linho Soft", "Linho"],
+    textures: ["Areia", "Linho Soft", "Linho", "Algodão"],
     imageRoom: "/images/colecao-rede-1.png",
     imageSheet: "/images/colecao-rede-2.png",
     imageDetail: "/images/colecao-rede-3.png",
@@ -243,6 +244,9 @@ const ProductCard = ({ product }: { product: Product }) => {
         <p className="text-sm text-stone-500 font-light">
           {product.category[0]}
         </p>
+        <p className="text-xs text-stone-600 font-medium pt-1">
+          Preço à partir de R$ 360,00
+        </p>
       </div>
     </div>
   );
@@ -345,7 +349,7 @@ const QuoteModal = ({
       `*Produto:* ${product.name} (N.º ${product.number})%0A` +
       `*Coleção:* Maré Mansa%0A` +
       `*Textura:* ${selectedTexture}%0A%0A` +
-      `*Medidas das Paredes:*%0A${wallDetails}%0A%0A` +
+      `*Medidas das Paredes*%0A${wallDetails}%0A%0A` +
       `*Total estimado:* ${totalRolls} rolo(s)%0A%0A` +
       `Aguardo retorno. Obrigado!`;
 
@@ -363,7 +367,7 @@ const QuoteModal = ({
     }
 
     const message = generateWhatsAppMessage();
-    const phoneNumber = "5500000000000"; // Substitua pelo número real
+    const phoneNumber = "5521994408290"; // Substitua pelo número real
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, "_blank");
   };
@@ -373,11 +377,11 @@ const QuoteModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[550px] bg-white p-0 overflow-hidden gap-0 border-none rounded-2xl max-h-[90vh] overflow-y-auto">
-        <DialogTitle className="sr-only">Calcular Quantidade</DialogTitle>
+        <DialogTitle className="sr-only">Comprar</DialogTitle>
         <div className="p-6 md:p-8">
           <div className="mb-6">
             <h2 className="font-medium text-2xl text-stone-900 tracking-tight">
-              Calcular Quantidade
+              Comprar
             </h2>
             <p className="text-sm text-stone-500 font-light mt-1">
               Informe as medidas das suas paredes e escolha a textura
@@ -755,9 +759,17 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <h2 className="font-medium text-2xl text-stone-900 mb-0.5 tracking-tight">
             {product.name}
           </h2>
-          <p className="text-xs text-stone-400 font-light mb-5">
+          <p className="text-xs text-stone-400 font-light mb-4">
             Coleção Maré Mansa • N.º {product.number}
           </p>
+
+          {/* Botão Comprar em destaque */}
+          <Button
+            onClick={() => setIsQuoteModalOpen(true)}
+            className="w-full h-14 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-lg font-semibold mb-5 shadow-lg"
+          >
+            Comprar
+          </Button>
 
           <div className="space-y-5 text-sm">
             <div>
@@ -767,35 +779,6 @@ const ProductDetails = ({ product }: { product: Product }) => {
               <p className="text-stone-600 leading-relaxed font-light text-sm">
                 {product.description}
               </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-stone-100">
-              <div>
-                <p className="text-[10px] text-stone-400 font-medium uppercase tracking-wider mb-1">
-                  Material
-                </p>
-                <p className="font-light text-stone-800 text-xs leading-relaxed">
-                  {product.material}
-                </p>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-[10px] text-stone-400 font-medium uppercase tracking-wider mb-0.5">
-                    Largura
-                  </p>
-                  <p className="font-light text-stone-800 text-xs">
-                    {product.rollWidth}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-stone-400 font-medium uppercase tracking-wider mb-0.5">
-                    Alturas
-                  </p>
-                  <p className="font-light text-stone-800 text-xs">
-                    {product.availableHeights}
-                  </p>
-                </div>
-              </div>
             </div>
 
             <div className="pt-4 border-t border-stone-100">
@@ -853,22 +836,16 @@ const ProductDetails = ({ product }: { product: Product }) => {
             </div>
           </div>
 
-          <div className="mt-6 pt-5 border-t border-stone-100 flex gap-3">
-            <Button
-              onClick={() => setIsQuoteModalOpen(true)}
-              className="flex-1 h-11 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-sm"
-            >
-              Calcular Quantidade
-            </Button>
+          <div className="mt-6 pt-5 border-t border-stone-100 flex justify-end">
             <Button
               variant="outline"
-              className="h-11 w-11 rounded-full border-stone-200 text-stone-600 hover:bg-stone-50 p-0 flex items-center justify-center"
+              className="h-10 w-10 rounded-full border-stone-200 text-stone-600 hover:bg-stone-50 p-0 flex items-center justify-center"
               title="Compartilhar"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -912,9 +889,17 @@ const ProductDetails = ({ product }: { product: Product }) => {
             <h2 className="font-medium text-3xl text-stone-900 mb-1 tracking-tight">
               {product.name}
             </h2>
-            <p className="text-sm text-stone-400 font-light mb-8">
+            <p className="text-sm text-stone-400 font-light mb-6">
               Coleção Maré Mansa • N.º {product.number}
             </p>
+
+            {/* Botão Comprar em destaque */}
+            <Button
+              onClick={() => setIsQuoteModalOpen(true)}
+              className="w-full h-16 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xl font-semibold mb-8 shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Comprar
+            </Button>
 
             <div className="space-y-8 text-sm">
               <div>
@@ -922,35 +907,6 @@ const ProductDetails = ({ product }: { product: Product }) => {
                 <p className="text-stone-600 leading-relaxed font-light">
                   {product.description}
                 </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-8 pt-6 border-t border-stone-100">
-                <div>
-                  <p className="text-xs text-stone-400 font-medium uppercase tracking-wider mb-2">
-                    Material
-                  </p>
-                  <p className="font-light text-stone-800 leading-relaxed">
-                    {product.material}
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xs text-stone-400 font-medium uppercase tracking-wider mb-1">
-                      Largura
-                    </p>
-                    <p className="font-light text-stone-800">
-                      {product.rollWidth}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-stone-400 font-medium uppercase tracking-wider mb-1">
-                      Alturas
-                    </p>
-                    <p className="font-light text-stone-800">
-                      {product.availableHeights}
-                    </p>
-                  </div>
-                </div>
               </div>
 
               <div>
@@ -1017,22 +973,16 @@ const ProductDetails = ({ product }: { product: Product }) => {
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-stone-100 flex gap-4">
-            <Button
-              onClick={() => setIsQuoteModalOpen(true)}
-              className="flex-1 h-12 bg-stone-900 hover:bg-stone-800 text-white rounded-full transition-transform hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Calcular Quantidade
-            </Button>
+          <div className="mt-8 pt-6 border-t border-stone-100 flex justify-end">
             <Button
               variant="outline"
-              className="h-12 w-12 rounded-full border-stone-200 text-stone-600 hover:bg-stone-50 p-0 flex items-center justify-center"
+              className="h-10 w-10 rounded-full border-stone-200 text-stone-600 hover:bg-stone-50 p-0 flex items-center justify-center"
               title="Compartilhar"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
