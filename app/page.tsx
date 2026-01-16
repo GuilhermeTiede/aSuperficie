@@ -506,11 +506,12 @@ const QuoteModal = ({
                       <div className="pt-3 border-t border-stone-200">
                         <div className="flex items-center justify-between text-xs">
                           <span className="text-stone-500">
-                            {calc.widthRolls} rolo(s) na largura ×{" "}
-                            {calc.heightRolls} na altura
+                            {calc.widthRolls}{" "}
+                            {calc.widthRolls === 1 ? "faixa" : "faixas"} de{" "}
+                            {ROLL_WIDTH}cm
                           </span>
                           <span className="font-semibold text-stone-900 bg-stone-200 px-2 py-1 rounded-full">
-                            {calc.rolls} rolo(s)
+                            {calc.rolls} rolo{calc.rolls !== 1 ? "s" : ""}
                           </span>
                         </div>
                       </div>
@@ -523,7 +524,7 @@ const QuoteModal = ({
 
           {/* Resumo */}
           {validWalls.length > 0 && (
-            <div className="mt-6 p-4 bg-stone-900 text-white rounded-xl">
+            <div className="mt-6 p-4 bg-stone-900 text-white rounded-xl space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wider">
@@ -535,13 +536,32 @@ const QuoteModal = ({
                 </div>
                 <div className="text-right text-xs text-stone-400">
                   <p>
-                    Rolo: {ROLL_WIDTH}cm × {ROLL_HEIGHT}cm
-                  </p>
-                  <p>
                     {validWalls.length} parede
                     {validWalls.length !== 1 ? "s" : ""}
                   </p>
                 </div>
+              </div>
+
+              {/* Detalhes dos rolos por parede */}
+              <div className="pt-3 border-t border-stone-700 space-y-1.5">
+                {walls.map((wall, index) => {
+                  if (wall.height <= 0 || wall.width <= 0) return null;
+                  const rollHeight = wall.height + 10; // altura da parede + 10cm de sobra
+                  const calc = rollCalculations.find(
+                    (c) => c.wallId === wall.id
+                  );
+                  return (
+                    <div key={wall.id} className="flex justify-between text-xs">
+                      <span className="text-stone-400">
+                        Rolo Parede {index + 1}: {ROLL_WIDTH}cm × {rollHeight}cm
+                      </span>
+                      <span className="text-white font-medium">
+                        {calc?.rolls || 0} rolo
+                        {(calc?.rolls || 0) !== 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
