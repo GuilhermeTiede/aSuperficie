@@ -1,6 +1,8 @@
+import { withPayload } from "@payloadcms/next/withPayload";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // Adicione esta linha
+  // output: "export", // Desabilitado para usar Payload CMS (precisa de server)
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -9,4 +11,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);
