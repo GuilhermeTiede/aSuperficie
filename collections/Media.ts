@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { supabaseStorageAdapter } from "@/lib/supabaseStorageAdapter";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -13,7 +14,7 @@ export const Media: CollectionConfig = {
     read: () => true, // Public access for images
   },
   upload: {
-    staticDir: "public/media",
+    adapter: supabaseStorageAdapter,
     mimeTypes: ["image/*"],
     imageSizes: [
       {
